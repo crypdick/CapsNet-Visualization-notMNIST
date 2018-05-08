@@ -32,17 +32,17 @@ with open(PATH_TO_CONV1, 'wb') as outfile:
     np.save(outfile, weights)
 
 # conv1/kernel (DT_FLOAT) [9,9,1,256]
-bias = sess.run('conv1/kernel 0')
+bias = sess.run('conv1/kernel:0')
 with open(PATH_TO_CONV1_BIAS, 'wb') as outfile:
     np.save(outfile, bias)
 
 # primarycap_conv2d/kernel (DT_FLOAT) [9,9,256,256]
-weights = sess.run('primarycap_conv2d/kernel 0')
+weights = sess.run('primarycap_conv2d/kernel:0')
 with open(PATH_TO_PRIMARY_CAPS, 'wb') as outfile:
     np.save(outfile, weights)
 
 # primarycap_conv2d/bias (DT_FLOAT) [256]
-bias = sess.run('primarycap_conv2d/bias 0')
+bias = sess.run('primarycap_conv2d/bias:0')
 with open(PATH_TO_PRIMARY_CAPS_BIAS, 'wb') as outfile:
     np.save(outfile, bias)
 
@@ -58,7 +58,7 @@ with open(PATH_TO_FULLY_CONNECTED1, 'wb') as outfile:
     np.save(outfile, weights)
 
 # dense_1/bias (DT_FLOAT) [512]
-bias = sess.run('dense_1/bias0')
+bias = sess.run('dense_1/bias:0')
 with open(PATH_TO_FULLY_CONNECTED1_BIAS, 'wb') as outfile:
     np.save(outfile, bias)
 
