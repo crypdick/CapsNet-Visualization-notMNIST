@@ -35,9 +35,9 @@ def natural_sortkey(string):
 @app.route('/images')
 def get_images():
     res = {}
-    for input_dir in os.listdir('visualizations'):
+    for input_dir in os.listdir('visualizations_notMNIST'):
         res[input_dir] = []
-        layers_path = os.path.join('visualizations', input_dir)
+        layers_path = os.path.join('visualizations_notMNIST', input_dir)
         if os.path.isdir(layers_path):
             for i, layer_dir in enumerate(sorted(os.listdir(layers_path), key=natural_sortkey)):
                 res[input_dir].append([])

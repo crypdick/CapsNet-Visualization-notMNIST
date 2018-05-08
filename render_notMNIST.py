@@ -8,15 +8,15 @@ from scipy import signal
 from matplotlib.colors import LinearSegmentedColormap
 import json
 
-PATH_TO_TEST_IMAGES_DIR = 'test_images'
+PATH_TO_TEST_IMAGES_DIR = 'test_images_notMNIST'
 PATH_TO_TEST_IMAGE = sys.argv[1]
 
 # Black and white color map going from (0, 0, 0) "black" to (1, 1, 1) "white".
 CMAP = LinearSegmentedColormap.from_list('greyscale', ((0, 0, 0), (1, 1, 1)), N=256, gamma=1.0)
 
 # Output directories for visualizations.
-PATH_TO_ROOT = 'visualizations'
-PATH_TO_VISUALIZATIONS = os.path.join(PATH_TO_ROOT, PATH_TO_TEST_IMAGE)
+PATH_TO_ROOT = 'visualizations_notMNIST'
+PATH_TO_VISUALIZATIONS = os.path.join(PATH_TO_ROOT)#, PATH_TO_TEST_IMAGE)
 if not os.path.exists(PATH_TO_VISUALIZATIONS):
     os.mkdir(PATH_TO_VISUALIZATIONS)
 
@@ -44,7 +44,7 @@ if not os.path.exists(PATH_TO_RECONSTRUCTION_JSON_PARAMS):
     os.mkdir(PATH_TO_RECONSTRUCTION_JSON_PARAMS)
 
 # Input directories for layer weights.
-PATH_TO_WEIGHTS = 'numpy_weights'
+PATH_TO_WEIGHTS = 'notMNIST_vanilla_weights'
 PATH_TO_WEIGHTS_CONV1 = os.path.join(PATH_TO_WEIGHTS, 'conv1.weights.npz')
 PATH_TO_WEIGHTS_CONV1_BIAS = os.path.join(PATH_TO_WEIGHTS, 'conv1.bias.npz')
 PATH_TO_WEIGHTS_PRIMARY_CAPS = os.path.join(PATH_TO_WEIGHTS, 'primary_caps.weights.npz')
