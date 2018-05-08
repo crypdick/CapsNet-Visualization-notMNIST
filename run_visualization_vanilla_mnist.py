@@ -90,6 +90,7 @@ def reconstruct():
     signal = np.dot(output, fully_connected1) + fully_connected1_bias # bias
     output = ReLU_function(signal)
 
+    # TODO: not working
     signal = np.dot(output, fully_connected2) + fully_connected2_bias # bias
     output = ReLU_function(signal)
 
