@@ -11,6 +11,8 @@ from flask import Flask, send_from_directory, jsonify, request
 app = Flask(__name__, static_folder='')
 
 
+PATH_TO_WEIGHTS = 'mnist_vanilla_weights'
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -66,7 +68,6 @@ def ReLU_function(signal):
 def reconstruct():
     CMAP = LinearSegmentedColormap.from_list('greyscale', ((0, 0, 0), (1, 1, 1)), N=256, gamma=1.0)
 
-    PATH_TO_WEIGHTS = 'numpy_weights'
     PATH_TO_WEIGHTS_FULLY_CONNECTED1 = os.path.join(PATH_TO_WEIGHTS, 'fully_connected1.weights.npz')
     PATH_TO_WEIGHTS_FULLY_CONNECTED2 = os.path.join(PATH_TO_WEIGHTS, 'fully_connected2.weights.npz')
     PATH_TO_WEIGHTS_FULLY_CONNECTED3 = os.path.join(PATH_TO_WEIGHTS, 'fully_connected3.weights.npz')
@@ -83,6 +84,7 @@ def reconstruct():
 
     output = np.array(request.json['vector'])
 
+    # TODO: figure out this reshape
     fully_connected1 = fully_connected1.reshape(10, 16, 512)[request.json['predicted']]
 
     signal = np.dot(output, fully_connected1) + fully_connected1_bias # bias
