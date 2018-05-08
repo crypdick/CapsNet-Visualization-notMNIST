@@ -16,7 +16,7 @@ CMAP = LinearSegmentedColormap.from_list('greyscale', ((0, 0, 0), (1, 1, 1)), N=
 
 # Output directories for visualizations.
 PATH_TO_ROOT = 'visualizations_notMNIST'
-PATH_TO_VISUALIZATIONS = os.path.join(PATH_TO_ROOT)#, PATH_TO_TEST_IMAGE)
+PATH_TO_VISUALIZATIONS = os.path.join(PATH_TO_ROOT, PATH_TO_TEST_IMAGE)
 if not os.path.exists(PATH_TO_VISUALIZATIONS):
     os.mkdir(PATH_TO_VISUALIZATIONS)
 
@@ -179,11 +179,16 @@ for i in range(normed_squashed_caps_output.shape[2]):
 
 # Add in a blank dimension: (1, 1152, 1, 8, 1)
 squashed_caps_output = np.reshape(squashed_caps_output, (-1, 1, squashed_caps_output.shape[-2], 1))
+#squashed_caps_output = np.reshape(squashed_caps_output, (-1, 1, squashed_caps_output.shape[-2], 1))
 # Tile the capsules in the inserted dimension: (1, 1152, 10, 8, 1)
 caps_output_tiled = np.tile(squashed_caps_output, [1, 1, 10, 1, 1])
 
+# TODO: transpose has
+
 # Transpose DigitCaps (1, 1152, 10, 8, 16) -> (1, 1152, 10, 16, 8)
-# matmul caps_output_tiled (1152, 10, 8, 1) by digit_caps (1, 1152, 10, 16, 8)
+# Transpose DigitCaps actually (10, 1152, 16, 8) -> (1, 1152, 10, 16, 8)
+# dc shape after resize (1, 10, 1152, 16, 8)
+# matmul caps_output_tiled (1, 1152, 10, 8, 1) by digit_caps (1, 1152, 10, 16, 8)
 # It's doing a matrix multiplication on the last 2 dimensions:
 #                 │ 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 #                 │ 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -196,7 +201,17 @@ caps_output_tiled = np.tile(squashed_caps_output, [1, 1, 10, 1, 1])
 # ────────────────┼────────────────────────────────
 # 1 2 3 4 5 6 7 8 │ 1 2 3 4 5 6 7 8 0 0 0 0 0 0 0 0
 
-caps2_predicted = np.matmul(np.transpose(digit_caps, (0, 1, 2, 4, 3)), caps_output_tiled)
+try:
+    # add dim to front
+    dc_shape = np.shape(digit_caps)
+    digit_caps = np.reshape(digit_caps, (1, digit_caps.shape[-4], digit_caps.shape[-3], digit_caps.shape[-2], digit_caps.shape[-1]))
+    dc_transposed = np.transpose(digit_caps, (0,2,1,3,4))
+    print("dct shape", dc_transposed.shape)
+    caps2_predicted = np.matmul(dc_transposed, caps_output_tiled)
+    #caps2_predicted = np.matmul(np.transpose(digit_caps, (0, 1, 2, 4, 3)), caps_output_tiled)
+except:
+    print("dc shape", np.shape(digit_caps), "caps tiled", np.shape(caps_output_tiled))
+    print("transpose shape", np.shape(np.transpose(digit_caps, (1,0,2,3))))
 
 raw_weights = np.zeros([1, 1152, 10, 1, 1])
 
