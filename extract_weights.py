@@ -4,7 +4,8 @@ import numpy as np
 import os
 
 PATH_TO_CKPT = '/tmp'
-MODEL_VERSION = 'keras_model.ckpt'
+MODEL_VERSION = 'keras_notMNIST_model.ckpt'
+#MODEL_VERSION = 'keras_model.ckpt'
 PATH_TO_MODEL = os.path.join(PATH_TO_CKPT, MODEL_VERSION)
 
 PATH_TO_WEIGHTS = 'numpy_weights'
