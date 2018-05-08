@@ -53,6 +53,9 @@ weights = sess.run('digitcaps/W:0')
 with open(PATH_TO_DIGIT_CAPS, 'wb') as outfile:
     np.save(outfile, weights)
 
+
+# reconstruction net
+
 # dense_1/kernel (DT_FLOAT) [160,512]
 weights = sess.run('dense_1/kernel:0')
 with open(PATH_TO_FULLY_CONNECTED1, 'wb') as outfile:
@@ -63,8 +66,8 @@ bias = sess.run('dense_1/bias:0')
 with open(PATH_TO_FULLY_CONNECTED1_BIAS, 'wb') as outfile:
     np.save(outfile, bias)
 
-# dense_1/kernel (DT_FLOAT) [160,512]
-weights = sess.run('dense_1/kernel:0')
+# dense_2/kernel (DT_FLOAT) [512,1024]
+weights = sess.run('dense_2/kernel:0')
 with open(PATH_TO_FULLY_CONNECTED2, 'wb') as outfile:
     np.save(outfile, weights)
 
@@ -75,8 +78,8 @@ with open(PATH_TO_FULLY_CONNECTED2_BIAS, 'wb') as outfile:
     np.save(outfile, bias)
 
 
-# dense_2/kernel (DT_FLOAT) [512,1024]
-weights = sess.run('dense_2/kernel:0')
+# dense_3/kernel (DT_FLOAT) [1024,784]
+weights = sess.run('dense_3/kernel:0')
 with open(PATH_TO_FULLY_CONNECTED3, 'wb') as outfile:
     np.save(outfile, weights)
 
