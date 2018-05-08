@@ -32,8 +32,8 @@ weights = sess.run('conv1/kernel:0')
 with open(PATH_TO_CONV1, 'wb') as outfile:
     np.save(outfile, weights)
 
-# conv1/kernel (DT_FLOAT) [9,9,1,256]
-bias = sess.run('conv1/kernel:0')
+# conv1/bias (DT_FLOAT) [256]
+bias = sess.run('conv1/bias:0')
 with open(PATH_TO_CONV1_BIAS, 'wb') as outfile:
     np.save(outfile, bias)
 
